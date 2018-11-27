@@ -42,19 +42,22 @@ def get_pet_labels(image_dir):
     """
     # Replace None with the results_dic dictionary that you created with this
     # function
-    results_dic=dict()
-    f_list= listdir(image_dir)
-    
-    for name in range(0,len(f_list),1):
-        if f_list[name][0]!= "." :
-            if name not in results_dic:
-                pet_label = ''.join(l for l in f_list[name] if not l.isdigit())  # joing per letter into a string
-                pet_label = pet_label.rsplit(".",1)[0] #removes the end .jpg
-                pet_label = pet_label[:-1].lower().replace("_", " ") # converts to lowercase and replaces underscores in name
-                results_dic[f_list[name]]= [pet_label] #adds to dictionary
-            else:
-                print("**Warning: key =", f_list[name],"already exists in dictionary")
-    
-    return results_dic
-    
+    f_list = listdir(image_dir)
+    petlabels_dic = dict()
+    for i in range(0, len(f_list), 1):
+      if f_list[i][0] != ".": 
+         name = f_list[i].split("_")
+         pet_label=""
+         for word in name:
+               if word.isalpha():
+                    pet_label += word.lower() + " "
+  
+         pet_label=pet_label.strip()    
+         if f_list[i] not in petlabels_dic:
+               petlabels_dic[f_list[i]] = [pet_label]
+   
+         else:
+                 print("Warning: File already in directory", f_list[i])
+
+    return petlabels_dic
    
